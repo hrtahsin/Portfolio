@@ -81,6 +81,23 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 function ProjectPreview({ project }: { project: Project }) {
   if (project.screenshots?.length) {
     const isDesktopScreenshot = project.screenshotLayout === "desktop";
+    const isPosterScreenshot = project.screenshotLayout === "poster";
+
+    if (isPosterScreenshot) {
+      const [poster] = project.screenshots;
+
+      return (
+        <div className="relative aspect-[2/3] w-full overflow-hidden rounded-md border border-border bg-surface shadow-sm">
+          <Image
+            src={poster.src}
+            alt={poster.alt}
+            fill
+            sizes="(min-width: 768px) 40vw, calc(100vw - 2.5rem)"
+            className="object-cover"
+          />
+        </div>
+      );
+    }
 
     return (
       <div className="min-w-0 rounded-md border border-border bg-surface-muted p-4">

@@ -53,7 +53,7 @@ export interface Project {
   contribution?: string;
   image?: ProjectImage;
   screenshots?: ProjectImage[];
-  screenshotLayout?: "mobile" | "desktop";
+  screenshotLayout?: "mobile" | "desktop" | "poster";
   links: ProjectLink[];
   caseStudy?: ProjectCaseStudy;
 }

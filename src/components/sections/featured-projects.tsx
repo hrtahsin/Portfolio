@@ -12,7 +12,7 @@ export function FeaturedProjects() {
         <SectionHeading
           eyebrow="Selected work"
           title="Projects with visible engineering decisions"
-          description="A focused set of projects across backend systems, mobile product development, reliability planning, and Java desktop work."
+          description="A focused set of projects across backend systems, mobile product development, data storytelling, reliability planning, and Java desktop work."
         />
 
         <div className="mt-10 grid gap-6">

@@ -162,6 +162,32 @@ export const projects = [
     },
   },
   {
+    slug: "skyward-bound-satellite-data-infographic",
+    title: "Skyward Bound: Satellite Data Infographic",
+    shortDescription:
+      "An end-to-end data storytelling project based on approximately 63,000 satellite records.",
+    summary:
+      "The dataset was cleaned and processed to examine changes in satellite mass, operational orbit, and mission type across multiple decades, then presented as a single infographic poster.",
+    status: "completed",
+    featured: true,
+    technologies: ["Python", "Pandas", "NumPy", "Matplotlib", "Jupyter Notebook"],
+    highlights: [
+      "Cleaned and processed approximately 63,000 satellite records for analysis.",
+      "Extracted features to compare satellite mass, operational orbit, and mission type across decades.",
+      "Combined multiple visualizations into a single infographic explaining major developments in the satellite age.",
+    ],
+    contribution:
+      "Handled data cleaning, feature extraction, trend analysis, visualization design, and final infographic composition.",
+    screenshots: [
+      {
+        src: "/images/projects/skyward-bound/infographic-poster.jpg",
+        alt: "Skyward Bound satellite age infographic poster with charts about satellite mass, orbit counts, and satellite types over time.",
+      },
+    ],
+    screenshotLayout: "poster",
+    links: [],
+  },
+  {
     slug: "api-monitoring-incident-management-platform",
     title: "API Monitoring & Incident Management Platform",
     shortDescription:
@@ -223,19 +249,38 @@ export const skillGroups = [
   },
   {
     title: "Backend and APIs",
-    skills: ["Spring Boot", "Spring Cloud", "REST APIs", "Kafka", "Firebase Functions"],
+    skills: [
+      "Spring Boot",
+      "Spring Cloud",
+      "Node.js",
+      "REST APIs",
+      "GraphQL",
+      "gRPC",
+      "Kafka",
+      "Firebase Functions",
+    ],
   },
   {
     title: "Frontend and Mobile",
     skills: ["React", "Next.js", "Flutter", "Tailwind CSS"],
   },
   {
-    title: "Data and Storage",
-    skills: ["PostgreSQL", "MySQL", "MongoDB", "SQLite", "Firestore"],
+    title: "Data, Visualization, and Storage",
+    skills: [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "SQLite",
+      "Firestore",
+      "NumPy",
+      "Pandas",
+      "Matplotlib",
+      "Seaborn",
+    ],
   },
   {
     title: "Cloud, DevOps, and Tooling",
-    skills: ["AWS fundamentals", "Docker", "GitHub Actions", "Git", "Maven", "Vercel", "Linux fundamentals"],
+    skills: ["AWS", "Docker", "GitHub Actions", "Git", "Maven", "Vercel", "Linux fundamentals", "Scripting"],
   },
   {
     title: "Networking and Security",
