@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
@@ -7,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { projects } from "@/data/portfolio";
+import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 import type { Project, ProjectStatus } from "@/types/portfolio";
 
@@ -84,7 +86,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </Link>
 
             <div className="mt-10 max-w-4xl">
-              <Badge>{statusLabels[project.status]}</Badge>
+              <Badge>{project.statusLabel ?? statusLabels[project.status]}</Badge>
               <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-normal text-text sm:text-5xl">
                 {project.title}
               </h1>
@@ -93,8 +95,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </Container>
         </section>
 
-        <Container className="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="grid gap-10">
+        <Container className="grid grid-cols-1 gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div className="grid min-w-0 gap-10">
             <CaseStudySection title="Role and Contribution">
               <p>{project.caseStudy.role}</p>
             </CaseStudySection>
@@ -106,6 +108,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <CaseStudySection title="Solution Overview">
               <p>{project.caseStudy.solution}</p>
             </CaseStudySection>
+
+            {project.screenshots?.length ? (
+              <CaseStudySection title="Interface Screens">
+                <ProjectScreenshots project={project} />
+              </CaseStudySection>
+            ) : null}
 
             <CaseStudySection title="Architecture View">
               <ArchitectureDiagram project={project} />
@@ -128,12 +136,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </CaseStudySection>
           </div>
 
-          <aside className="h-fit rounded-lg border border-border bg-surface p-5 lg:sticky lg:top-24">
+          <aside className="h-fit min-w-0 rounded-lg border border-border bg-surface p-5 lg:sticky lg:top-24">
             <h2 className="text-lg font-semibold text-text">Project Details</h2>
             <dl className="mt-5 grid gap-4 text-sm">
               <div>
                 <dt className="font-semibold text-text">Status</dt>
-                <dd className="mt-1 text-text-muted">{statusLabels[project.status]}</dd>
+                <dd className="mt-1 text-text-muted">
+                  {project.statusLabel ?? statusLabels[project.status]}
+                </dd>
               </div>
               <div>
                 <dt className="font-semibold text-text">Technologies</dt>
@@ -180,7 +190,7 @@ function CaseStudySection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="max-w-3xl">
+    <section className="min-w-0 max-w-3xl w-full">
       <h2 className="text-2xl font-semibold tracking-normal text-text">{title}</h2>
       <div className="mt-4 text-base leading-8 text-text-muted">{children}</div>
     </section>
@@ -200,10 +210,70 @@ function CaseStudyList({ items }: { items: string[] }) {
   );
 }
 
+function ProjectScreenshots({ project }: { project: Project }) {
+  return (
+    <div className="overflow-hidden rounded-lg border border-border bg-surface p-4">
+      <div
+        aria-label={`${project.title} screenshots`}
+        className="flex max-w-full snap-x snap-mandatory gap-4 overflow-x-auto pb-3"
+      >
+        {project.screenshots?.map((screenshot) => {
+          const screenshotLayout = screenshot.layout ?? project.screenshotLayout;
+          const isDesktopScreenshot = screenshotLayout === "desktop";
+          const isPosterScreenshot = screenshotLayout === "poster";
+
+          return (
+            <div
+              key={screenshot.src}
+              className={cn(
+                "relative shrink-0 snap-start overflow-hidden rounded-md border border-border bg-surface-muted shadow-sm",
+                isPosterScreenshot
+                  ? "aspect-[2/3] w-80"
+                  : isDesktopScreenshot
+                  ? "aspect-[16/9] w-72 sm:w-[34rem]"
+                  : "h-[28rem] w-56",
+              )}
+            >
+              <Image
+                src={screenshot.src}
+                alt={screenshot.alt}
+                fill
+                sizes={isPosterScreenshot ? "320px" : isDesktopScreenshot ? "544px" : "224px"}
+                className={isPosterScreenshot ? "object-cover" : "object-contain"}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function ArchitectureDiagram({ project }: { project: Project }) {
+  const architectureImage = project.caseStudy?.architectureImage;
+
+  if (architectureImage) {
+    return (
+      <div className="rounded-lg border border-border bg-surface p-4">
+        <Image
+          src={architectureImage.src}
+          alt={architectureImage.alt}
+          width={architectureImage.width ?? 1200}
+          height={architectureImage.height ?? 675}
+          sizes="(min-width: 1024px) 768px, calc(100vw - 2.5rem)"
+          className="h-auto w-full rounded-md border border-border bg-surface-muted"
+        />
+      </div>
+    );
+  }
+
   const nodes =
     project.slug === "ifixit-ticketing-app"
       ? ["Customer", "Flutter App", "Firebase Auth", "Firestore", "Cloud Function", "Dashboard"]
+      : project.slug === "api-monitoring-incident-management-platform"
+      ? ["React Dashboard", "Spring Boot API", "Scheduler", "PostgreSQL", "Incident Engine", "Notification Outbox"]
+      : project.slug === "skyward-bound-satellite-data-infographic"
+      ? ["Satellite Records", "Cleaning Pipeline", "Feature Extraction", "Dashboard Views", "Trend Analysis", "Infographic Poster"]
       : ["Order API", "Kafka Events", "Inventory", "Payment", "Shipping", "Notifications"];
 
   return (

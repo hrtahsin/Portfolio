@@ -29,12 +29,16 @@ export interface PersonalProfile {
 export interface ProjectImage {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
+  layout?: "mobile" | "desktop" | "poster";
 }
 
 export interface ProjectCaseStudy {
   role: string;
   context: string;
   solution: string;
+  architectureImage?: ProjectImage;
   decisions: string[];
   challenges: string[];
   outcome: string;
@@ -47,6 +51,7 @@ export interface Project {
   shortDescription: string;
   summary: string;
   status: ProjectStatus;
+  statusLabel?: string;
   featured: boolean;
   technologies: string[];
   highlights: string[];

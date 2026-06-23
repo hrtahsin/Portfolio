@@ -28,7 +28,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
       <div className="flex min-w-0 flex-col">
         <div className="flex flex-wrap items-center gap-2">
-          <Badge>{statusLabels[project.status]}</Badge>
+          <Badge>{project.statusLabel ?? statusLabels[project.status]}</Badge>
           <span className="text-sm text-text-muted">{project.technologies.slice(0, 3).join(" · ")}</span>
         </div>
 
@@ -100,7 +100,7 @@ function ProjectPreview({ project }: { project: Project }) {
     }
 
     return (
-      <div className="min-w-0 rounded-md border border-border bg-surface-muted p-4">
+      <div className="min-w-0 overflow-hidden rounded-md border border-border bg-surface-muted p-4">
         <div
           aria-label={`${project.title} screenshots`}
           className="flex max-w-full snap-x snap-mandatory gap-4 overflow-x-auto pb-3"
@@ -111,7 +111,7 @@ function ProjectPreview({ project }: { project: Project }) {
               className={cn(
                 "relative shrink-0 snap-start overflow-hidden rounded-md border border-border bg-surface shadow-sm",
                 isDesktopScreenshot
-                  ? "h-64 w-[28rem] sm:h-72 sm:w-[34rem]"
+                  ? "aspect-[16/9] w-full sm:aspect-auto sm:h-72 sm:w-[34rem]"
                   : "h-[28rem] w-56",
               )}
             >
@@ -119,12 +119,26 @@ function ProjectPreview({ project }: { project: Project }) {
                 src={screenshot.src}
                 alt={screenshot.alt}
                 fill
-                sizes={isDesktopScreenshot ? "544px" : "224px"}
+                sizes={isDesktopScreenshot ? "(min-width: 640px) 544px, calc(100vw - 7rem)" : "224px"}
                 className="object-contain"
               />
             </div>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (project.image) {
+    return (
+      <div className="relative aspect-[16/9] overflow-hidden rounded-md border border-border bg-surface-muted shadow-sm">
+        <Image
+          src={project.image.src}
+          alt={project.image.alt}
+          fill
+          sizes="(min-width: 768px) 40vw, calc(100vw - 2.5rem)"
+          className="object-contain"
+        />
       </div>
     );
   }

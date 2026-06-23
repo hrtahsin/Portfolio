@@ -64,6 +64,12 @@ export const projects = [
     ],
     contribution:
       "Defining service boundaries, API contracts, persistence models, and failure-handling paths while building the backend incrementally.",
+    image: {
+      src: "/images/projects/event-driven-order-inventory-platform/architecture.png",
+      alt: "Event-driven order and inventory platform architecture diagram with Kafka topics, services, and service-owned databases.",
+      width: 1355,
+      height: 727,
+    },
     links: [
       {
         label: "Case Study",
@@ -77,6 +83,12 @@ export const projects = [
         "Commerce workflows often span several responsibilities that should not be hidden inside one large service. This project explores how order intake, inventory reservation, payment, shipping, and notifications can coordinate while keeping service ownership clear.",
       solution:
         "The implementation direction uses Spring Boot services with REST APIs for synchronous boundaries and Kafka events for asynchronous workflow steps. PostgreSQL stores service-owned data, while Docker supports local development as the system grows.",
+      architectureImage: {
+        src: "/images/projects/event-driven-order-inventory-platform/architecture.png",
+        alt: "Event-driven order and inventory platform architecture diagram showing event and request layers, Kafka topics, services, and service-owned databases.",
+        width: 1355,
+        height: 727,
+      },
       decisions: [
         "Keep order, inventory, payment, shipping, and notification responsibilities separated so each service can evolve independently.",
         "Use Kafka events for long-running workflow steps where immediate blocking calls would make failure handling harder.",
@@ -182,29 +194,154 @@ export const projects = [
       {
         src: "/images/projects/skyward-bound/infographic-poster.jpg",
         alt: "Skyward Bound satellite age infographic poster with charts about satellite mass, orbit counts, and satellite types over time.",
+        layout: "poster",
+      },
+      {
+        src: "/images/projects/skyward-bound/average-mass-dashboard.png",
+        alt: "Interactive dashboard showing average satellite mass over time with year and mass range controls.",
+        width: 749,
+        height: 558,
+        layout: "desktop",
+      },
+      {
+        src: "/images/projects/skyward-bound/satellite-types-dashboard.png",
+        alt: "Interactive dashboard showing satellite type evolution by decade with filter controls.",
+        width: 690,
+        height: 727,
+        layout: "desktop",
       },
     ],
     screenshotLayout: "poster",
-    links: [],
+    links: [
+      {
+        label: "Case Study",
+        href: "/projects/skyward-bound-satellite-data-infographic",
+      },
+    ],
+    caseStudy: {
+      role:
+        "Data visualization project owner responsible for cleaning the dataset, extracting analysis features, building dashboard views, and composing the final infographic.",
+      context:
+        "Satellite history is difficult to understand from raw tabular records alone. This project uses approximately 63,000 satellite records to explain changes in satellite mass, operational orbit, and mission type across multiple decades.",
+      solution:
+        "The workflow used Python, Pandas, NumPy, Matplotlib, and Jupyter Notebook to clean the records, process trend-oriented features, build interactive dashboard views, and assemble a final infographic poster for presentation.",
+      decisions: [
+        "Clean and process the satellite records before charting so mass, orbit, and type comparisons are based on consistent fields.",
+        "Use filterable dashboard views to explore average satellite mass over time and satellite type changes by decade.",
+        "Combine exploratory dashboard outputs with a single infographic poster that communicates the main story in one visual artifact.",
+      ],
+      challenges: [
+        "Reducing a large multi-decade dataset into readable visuals without losing important trend changes.",
+        "Balancing quantitative detail with poster-level storytelling and visual hierarchy.",
+        "Making dashboard screenshots and the final poster usable together in a compact case-study format.",
+      ],
+      outcome:
+        "Completed data storytelling project with cleaned satellite records, interactive dashboard views, trend analysis, and a final infographic poster explaining major developments in the satellite age.",
+      nextSteps: [
+        "Publish the dashboard if a public deployment is prepared.",
+        "Document the data-cleaning assumptions alongside the visual outputs.",
+        "Add more views for orbit distribution and mission-category comparisons if the analysis is extended.",
+      ],
+    },
   },
   {
     slug: "api-monitoring-incident-management-platform",
-    title: "API Monitoring & Incident Management Platform",
+    title: "APIWatch",
     shortDescription:
-      "A planned reliability platform for endpoint monitoring, uptime tracking, latency history, incidents, and service-level health.",
+      "A production-style API monitoring and incident management platform for scheduled checks, incidents, notifications, and reliability dashboards.",
     summary:
-      "The planned system is intended to monitor public or internal API endpoints, retain status history, surface incidents, and support service-health review.",
-    status: "planned",
+      "APIWatch lets teams register APIs, run manual or scheduled health checks, track uptime and latency, detect failures and rate-limit events, manage incidents, and route notifications through multiple providers.",
+    status: "completed",
+    statusLabel: "Version 1.0 completed",
     featured: true,
-    technologies: ["Spring Boot", "REST APIs", "PostgreSQL", "Scheduled Checks", "Cloud Deployment"],
+    technologies: [
+      "Java 21",
+      "Spring Boot 3.5",
+      "PostgreSQL 16",
+      "Flyway",
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "Recharts",
+      "Docker",
+      "GitHub Actions",
+    ],
     highlights: [
-      "Scope centers on scheduled endpoint checks, latency and status history, and incident timelines.",
-      "Design direction emphasizes practical service-level indicators rather than decorative dashboards.",
-      "Cloud deployment and alert rules are part of the roadmap, not represented as complete.",
+      "Supports service registration, manual and scheduled checks, configurable intervals, timeouts, failure thresholds, expected status ranges, and optional response-body validation.",
+      "Classifies health as UP, SLOW, DOWN, RATE_LIMITED, or UNKNOWN with diagnostics for HTTP status, timeout, DNS, connection, network, and security-block failures.",
+      "Creates and resolves incidents automatically or manually, then routes notifications through webhook, Slack, Discord, email, PagerDuty, and Opsgenie integrations.",
+      "Includes encrypted Bearer/API key/custom-header support, admin/viewer authentication, audit logs, SSRF protection, pagination, retention cleanup, Docker Compose, and CI/CD.",
     ],
     contribution:
-      "Planning the API model, monitoring workflow, persistence shape, and reliability-focused product behavior.",
-    links: [],
+      "Built the full-stack Version 1.0 scope across backend architecture, scheduled workers, database migrations, incident workflows, encrypted secrets, notification delivery, dashboard UX, tests, Docker, and CI/CD.",
+    screenshots: [
+      {
+        src: "/images/projects/apiwatch/overview-admin.png",
+        alt: "APIWatch administrator dashboard with service health metrics and registered APIs.",
+      },
+      {
+        src: "/images/projects/apiwatch/service-details.png",
+        alt: "APIWatch service details page with uptime, latency history, recent checks, and service actions.",
+      },
+      {
+        src: "/images/projects/apiwatch/add-service.png",
+        alt: "APIWatch add service form with endpoint, ownership, method, timeout, interval, and failure threshold fields.",
+      },
+      {
+        src: "/images/projects/apiwatch/notification-settings.png",
+        alt: "APIWatch notification settings page with provider, webhook, cooldown, escalation, and delivery audit panels.",
+      },
+      {
+        src: "/images/projects/apiwatch/overview-viewer.png",
+        alt: "APIWatch read-only viewer dashboard with service health metrics and registered APIs.",
+      },
+      {
+        src: "/images/projects/apiwatch/login.png",
+        alt: "APIWatch sign-in page for administrator or read-only viewer accounts.",
+      },
+    ],
+    screenshotLayout: "desktop",
+    links: [
+      {
+        label: "Case Study",
+        href: "/projects/api-monitoring-incident-management-platform",
+      },
+    ],
+    caseStudy: {
+      role:
+        "Full-stack project owner responsible for backend architecture, database design, scheduled monitoring, incident workflows, security controls, dashboard implementation, testing, Docker, and CI/CD.",
+      context:
+        "Teams should not have to manually check API health or piece together failures from scattered logs. APIWatch addresses that reliability gap by combining scheduled monitoring, historical health data, incident detection, alert routing, and an operations dashboard.",
+      solution:
+        "The system uses a Java 21 and Spring Boot 3.5 backend with Spring Security, WebFlux WebClient, Spring Data JPA, Flyway, PostgreSQL 16, and scheduled workers. The React 19 and TypeScript frontend presents service health, latency trends, incident activity, configuration screens, notification settings, and role-aware access.",
+      architectureImage: {
+        src: "/images/projects/apiwatch/architecture.png",
+        alt: "APIWatch architecture diagram showing the React dashboard, Spring Boot REST API, configurable scheduler, health check runner, external services, incident detection engine, and PostgreSQL.",
+        width: 784,
+        height: 687,
+      },
+      decisions: [
+        "Model monitored APIs as configurable services with expected status ranges, timeout settings, check intervals, failure thresholds, and optional response-body validation.",
+        "Classify failures into operationally useful states and diagnostics, including DOWN, SLOW, RATE_LIMITED, timeout, DNS, connection, network, and security-block outcomes.",
+        "Use repeated-failure thresholds to create incidents automatically while allowing both automatic and manual resolution when services recover.",
+        "Deliver notifications asynchronously through an outbox with retries, cooldowns, escalation delay, and per-service open/resolve notification rules.",
+        "Protect monitoring targets with SSRF controls, private-network blocking, encrypted secrets, Basic admin/viewer access, and audit logs for administrative actions.",
+      ],
+      challenges: [
+        "Separating service registration, health-check execution, incident lifecycle handling, notification delivery, and dashboard views without collapsing the system into one large workflow.",
+        "Handling real-world check outcomes such as timeouts, DNS failures, connection errors, rate limits, and security blocks in a way that remains understandable to the operator.",
+        "Balancing security features such as encrypted tokens, custom headers, SSRF protection, and auditability with a usable admin interface.",
+        "Keeping historical checks, incidents, notifications, and audit logs navigable through pagination and retention cleanup.",
+      ],
+      outcome:
+        "Version 1.0 is complete as a portfolio-grade full-stack project. Core feature development is complete across monitoring, incidents, notifications, security controls, responsive dashboard UX, tests, Docker Compose, and GitHub Actions CI/CD.",
+      nextSteps: [
+        "Deploy the application to a cloud environment with managed database hosting.",
+        "Add production domain, HTTPS, release tagging, and deployment documentation.",
+        "Refresh the README around the mature notification workflow.",
+        "Improve production observability and consider OAuth-based authentication for a later version.",
+      ],
+    },
   },
   {
     slug: "four-board-game",

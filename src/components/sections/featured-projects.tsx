@@ -4,7 +4,13 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { projects } from "@/data/portfolio";
 
 export function FeaturedProjects() {
-  const featuredProjects = projects.filter((project) => project.featured);
+  const featuredProjects = projects
+    .filter((project) => project.featured)
+    .sort(
+      (first, second) =>
+        Number(second.slug === "api-monitoring-incident-management-platform") -
+        Number(first.slug === "api-monitoring-incident-management-platform"),
+    );
 
   return (
     <section id="work" className="scroll-mt-24 border-b border-border">
